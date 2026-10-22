@@ -37,5 +37,4 @@ wrangler pages deploy build --project-name=jd-pastel-3d --branch=main
 ```
 
 El `static/_redirects` (`/* /index.html 200`) resuelve el SPA sin nada más.
-Dominio propio pendiente de DNS: `pastel.mango-ataulfo.com` (ver `scripts/dns-pages.sh`
-en la raíz del repo).
+Dominio propio activo: `pastel.mango-ataulfo.com` (respaldo: `jd-pastel-3d.pages.dev`).

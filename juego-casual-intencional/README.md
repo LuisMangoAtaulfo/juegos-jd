@@ -39,4 +39,4 @@ wrangler pages deploy build --project-name=jd-casual-intencional --branch=main
 ```
 
 El `static/_redirects` resuelve el SPA.
-Dominio propio pendiente de DNS: `casual.mango-ataulfo.com` (ver `scripts/dns-pages.sh`).
+Dominio propio activo: `casual.mango-ataulfo.com` (respaldo: `jd-casual-intencional.pages.dev`).

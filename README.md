@@ -64,30 +64,22 @@ mkdir -p dist && cp index.html styles.css dist/
 wrangler pages deploy dist --project-name=jd-portal --branch=main
 ```
 
-### Dominios propios (pendiente: solo DNS)
+### Dominios propios (activos)
 
-Los cuatro dominios ya están **adjuntados** a sus proyectos por la API
-(`pastel/tres/tablero/casual.mango-ataulfo.com`, estado `pending`), pero faltan
-los registros DNS: el token OAuth de wrangler solo tiene `zone:read`.
+Los cuatro subdominios están adjuntados a sus proyectos y validados
+(`status: active`), con sus CNAME en la zona `mango-ataulfo.com`:
 
-Un solo paso para activarlos (token con `Zone.DNS:Edit`):
+| Dominio | Registro | Proyecto |
+|---|---|---|
+| `pastel.mango-ataulfo.com` | CNAME → `jd-pastel-3d.pages.dev` | `jd-pastel-3d` |
+| `tres.mango-ataulfo.com` | CNAME → `jd-experimento-3.pages.dev` | `jd-experimento-3` |
+| `tablero.mango-ataulfo.com` | CNAME → `jd-dashboard-z.pages.dev` | `jd-dashboard-z` |
+| `casual.mango-ataulfo.com` | CNAME → `jd-casual-intencional.pages.dev` | `jd-casual-intencional` |
 
-```sh
-export CF_API_TOKEN=xxxx
-./scripts/dns-pages.sh
-```
-
-O a mano en **Cloudflare → DNS → mango-ataulfo.com → Add record**:
-
-| Type | Name | Content | Proxy |
-|---|---|---|---|
-| CNAME | `pastel` | `jd-pastel-3d.pages.dev` | Proxied |
-| CNAME | `tres` | `jd-experimento-3.pages.dev` | Proxied |
-| CNAME | `tablero` | `jd-dashboard-z.pages.dev` | Proxied |
-| CNAME | `casual` | `jd-casual-intencional.pages.dev` | Proxied |
-
-Cuando estén activos, cambiar los enlaces del portal (`index.html`) de
-`*.pages.dev` a los subdominios propios.
+Se crearon con `scripts/dns-pages.sh` (requiere un token con `Zone.DNS:Edit`
+en `~/.config/cloudflare/jd-dns-token` o la variable `CF_API_TOKEN`); sirve
+para recrearlos si algún registro se borra. El portal ya enlaza los subdominios
+propios; las URLs `*.pages.dev` siguen funcionando como respaldo.
 
 ## Accesibilidad
 

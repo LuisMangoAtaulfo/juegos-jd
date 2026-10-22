@@ -46,4 +46,4 @@ wrangler pages deploy build --project-name=jd-dashboard-z --branch=main
 ```
 
 El `static/_redirects` resuelve el SPA.
-Dominio propio pendiente de DNS: `tablero.mango-ataulfo.com` (ver `scripts/dns-pages.sh`).
+Dominio propio activo: `tablero.mango-ataulfo.com` (respaldo: `jd-dashboard-z.pages.dev`).

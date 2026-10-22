@@ -39,4 +39,4 @@ wrangler pages deploy build --project-name=jd-experimento-3 --branch=main
 ```
 
 El `static/_redirects` resuelve el SPA.
-Dominio propio pendiente de DNS: `tres.mango-ataulfo.com` (ver `scripts/dns-pages.sh`).
+Dominio propio activo: `tres.mango-ataulfo.com` (respaldo: `jd-experimento-3.pages.dev`).
