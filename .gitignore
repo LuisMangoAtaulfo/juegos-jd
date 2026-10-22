@@ -1,0 +1,21 @@
+# Salida de build
+node_modules/
+.svelte-kit/
+build/
+dist/
+.output/
+.wrangler/
+
+# Entregas de otras materias fuera de este repo
+p2/
+presentacion/
+crucigrama/
+
+# Temporales de Python / sistema
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# Rutas de zona de Windows
+*:Zone.Identifier

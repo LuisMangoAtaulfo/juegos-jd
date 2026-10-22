@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Módulos interactivos · Diseño y emisión de reportes</title>
+		<meta
+			name="description"
+			content="Cuatro juegos interactivos para el módulo de Diseño y emisión de reportes: percepción en gráficas, atributos preatentivos, arquitectura de dashboards y comunicación visual."
+		/>
+		<link
+			rel="icon"
+			href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%97%84%3C/text%3E%3C/svg%3E"
+		/>
+		<link rel="stylesheet" href="./styles.css" />
+	</head>
+	<body>
+		<div class="shell">
+			<header class="header">
+				<div class="logo" aria-hidden="true">◔</div>
+				<div class="brand">Módulos interactivos</div>
+				<div class="tag">Diseño y emisión de reportes</div>
+			</header>
+
+			<main class="main">
+				<section class="intro">
+					<span class="pill">4 juegos · una idea: el dato tiene que leerse</span>
+					<h1>Del dato a la decisión, jugando</h1>
+					<p>
+						Cada módulo toma un concepto de la materia y lo vuelve jugable: percepción en
+						gráficas, atención y color, arquitectura de un tablero ejecutivo y propósito
+						comunicativo de los estímulos.
+					</p>
+				</section>
+
+				<!-- Los href apuntan a los subdominios definitivos; ajustar si el
+				     dominio cambia o si aún no se han creado los proyectos en
+				     Cloudflare Pages (mientras tanto, usar las URLs *.pages.dev). -->
+				<ul class="grid">
+					<li>
+						<a class="card" href="https://pastel.mango-ataulfo.com">
+							<div class="card-head">
+								<span class="card-icon" aria-hidden="true">◔</span>
+								<h2>Juicio al pastel 3D</h2>
+								<span class="badge">Percepción</span>
+							</div>
+							<p>
+								¿A o D? Elige en un pastel inclinado y conviértelo en barras con eje en cero:
+								ángulos, perspectiva y línea base comparada.
+							</p>
+							<span class="domain">pastel.mango-ataulfo.com</span>
+						</a>
+					</li>
+					<li>
+						<a class="card" href="https://tres.mango-ataulfo.com">
+							<div class="card-head">
+								<span class="card-icon" aria-hidden="true">3</span>
+								<h2>Experimento del 3</h2>
+								<span class="badge">Atención</span>
+							</div>
+							<p>
+								Cronómetro en mano: cuenta los 3 en gris y otra vez con color. Mide tu propia
+								ventaja de los atributos preatentivos.
+							</p>
+							<span class="domain">tres.mango-ataulfo.com</span>
+						</a>
+					</li>
+					<li>
+						<a class="card" href="https://tablero.mango-ataulfo.com">
+							<div class="card-head">
+								<span class="card-icon" aria-hidden="true">Z</span>
+								<h2>Arma tu dashboard en Z</h2>
+								<span class="badge">Estructura</span>
+							</div>
+							<p>
+								Arrastra KPI, tendencia, filtros, tabla y notas en un lienzo 3×3 y valida la
+								arquitectura visual contra el patrón de lectura en Z.
+							</p>
+							<span class="domain">tablero.mango-ataulfo.com</span>
+						</a>
+					</li>
+					<li>
+						<a class="card" href="https://casual.mango-ataulfo.com">
+							<div class="card-head">
+								<span class="card-icon" aria-hidden="true">⇄</span>
+								<h2>Casual vs. Intencional</h2>
+								<span class="badge">Propósito</span>
+							</div>
+							<p>
+								Cinco estímulos, un veredicto: ¿alguien lo diseñó para decir algo? Después
+								revisa emisor y los cuatro filtros de percepción.
+							</p>
+							<span class="domain">casual.mango-ataulfo.com</span>
+						</a>
+					</li>
+					<li>
+						<div class="card local">
+							<div class="card-head">
+								<span class="card-icon" aria-hidden="true">▤</span>
+								<h2>Presentación de la materia</h2>
+								<span class="badge">Slidev</span>
+							</div>
+							<p>
+								Láminas de la unidad con los cuatro patrones de reporte. Se corre en local:
+								<code>cd presentacion &amp;&amp; npm run dev</code> → localhost:3030.
+							</p>
+						</div>
+					</li>
+				</ul>
+
+				<p class="note">
+					Cada juego es un sitio SvelteKit estático publicado por separado en Cloudflare Pages.
+					Para desplegarlos: <code>npm run build</code> dentro de cada carpeta y subir el
+					contenido de <code>build/</code>.
+				</p>
+			</main>
+
+			<footer class="footer">
+				<span>Módulo interactivo · Diseño y emisión de reportes</span>
+				<span>mango-ataulfo.com</span>
+			</footer>
+		</div>
+	</body>
+</html>
