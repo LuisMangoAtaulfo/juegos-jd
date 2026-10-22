@@ -31,11 +31,12 @@ npm run preview  # sirve build/
 
 ## Despliegue (Cloudflare Pages)
 
-| Campo | Valor |
-|---|---|
-| Root directory | `juego-experimento-3` |
-| Build command | `npm ci && npm run build` |
-| Output directory | `build` |
-| Variable | `NODE_VERSION=22` |
+**Publicado:** https://jd-experimento-3.pages.dev — proyecto `jd-experimento-3`.
 
-Dominio: `tres.mango-ataulfo.com`. El `static/_redirects` resuelve el SPA.
+```sh
+npm run build
+wrangler pages deploy build --project-name=jd-experimento-3 --branch=main
+```
+
+El `static/_redirects` resuelve el SPA.
+Dominio propio pendiente de DNS: `tres.mango-ataulfo.com` (ver `scripts/dns-pages.sh`).

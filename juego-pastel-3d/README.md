@@ -29,12 +29,13 @@ npm run preview  # sirve build/
 
 ## Despliegue (Cloudflare Pages)
 
-| Campo | Valor |
-|---|---|
-| Root directory | `juego-pastel-3d` |
-| Build command | `npm ci && npm run build` |
-| Output directory | `build` |
-| Variable | `NODE_VERSION=22` |
+**Publicado:** https://jd-pastel-3d.pages.dev — proyecto `jd-pastel-3d`.
 
-Dominio: `pastel.mango-ataulfo.com` (Custom domains del proyecto en Pages).
+```sh
+npm run build
+wrangler pages deploy build --project-name=jd-pastel-3d --branch=main
+```
+
 El `static/_redirects` (`/* /index.html 200`) resuelve el SPA sin nada más.
+Dominio propio pendiente de DNS: `pastel.mango-ataulfo.com` (ver `scripts/dns-pages.sh`
+en la raíz del repo).

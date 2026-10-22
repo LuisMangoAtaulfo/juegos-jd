@@ -31,11 +31,12 @@ npm run preview  # sirve build/
 
 ## Despliegue (Cloudflare Pages)
 
-| Campo | Valor |
-|---|---|
-| Root directory | `juego-casual-intencional` |
-| Build command | `npm ci && npm run build` |
-| Output directory | `build` |
-| Variable | `NODE_VERSION=22` |
+**Publicado:** https://jd-casual-intencional.pages.dev — proyecto `jd-casual-intencional`.
 
-Dominio: `casual.mango-ataulfo.com`. El `static/_redirects` resuelve el SPA.
+```sh
+npm run build
+wrangler pages deploy build --project-name=jd-casual-intencional --branch=main
+```
+
+El `static/_redirects` resuelve el SPA.
+Dominio propio pendiente de DNS: `casual.mango-ataulfo.com` (ver `scripts/dns-pages.sh`).

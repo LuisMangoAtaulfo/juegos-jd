@@ -40,23 +40,54 @@ proyecto de Cloudflare Pages.
 
 ## Despliegue en Cloudflare Pages
 
-Un repositorio, **cinco proyectos** en Pages (Settings → Build & deploy →
-*Connect to Git*), con *root directory* distinto por proyecto:
+**Ya publicado** (proyectos creados y builds subidos con wrangler). URLs en
+producción:
 
-| Proyecto | Root directory | Build command | Output |
+| Proyecto | URL |
+|---|---|
+| `jd-pastel-3d` | https://jd-pastel-3d.pages.dev |
+| `jd-experimento-3` | https://jd-experimento-3.pages.dev |
+| `jd-dashboard-z` | https://jd-dashboard-z.pages.dev |
+| `jd-casual-intencional` | https://jd-casual-intencional.pages.dev |
+| `jd-portal` | https://jd-portal.pages.dev |
+
+### Volver a publicar
+
+```sh
+for d in juego-pastel-3d juego-experimento-3 juego-dashboard-z juego-casual-intencional; do
+  proj="jd-${d#juego-}"            # jd-pastel-3d, jd-experimento-3, …
+  (cd "$d" && npm run build && wrangler pages deploy build --project-name="$proj" --branch=main)
+done
+
+# portal
+mkdir -p dist && cp index.html styles.css dist/
+wrangler pages deploy dist --project-name=jd-portal --branch=main
+```
+
+### Dominios propios (pendiente: solo DNS)
+
+Los cuatro dominios ya están **adjuntados** a sus proyectos por la API
+(`pastel/tres/tablero/casual.mango-ataulfo.com`, estado `pending`), pero faltan
+los registros DNS: el token OAuth de wrangler solo tiene `zone:read`.
+
+Un solo paso para activarlos (token con `Zone.DNS:Edit`):
+
+```sh
+export CF_API_TOKEN=xxxx
+./scripts/dns-pages.sh
+```
+
+O a mano en **Cloudflare → DNS → mango-ataulfo.com → Add record**:
+
+| Type | Name | Content | Proxy |
 |---|---|---|---|
-| `jd-pastel-3d` | `juego-pastel-3d` | `npm ci && npm run build` | `build` |
-| `jd-experimento-3` | `juego-experimento-3` | `npm ci && npm run build` | `build` |
-| `jd-dashboard-z` | `juego-dashboard-z` | `npm ci && npm run build` | `build` |
-| `jd-casual` | `juego-casual-intencional` | `npm ci && npm run build` | `build` |
-| `jd-portal` | *(raíz)* | `mkdir -p dist && cp index.html styles.css dist/` | `dist` |
+| CNAME | `pastel` | `jd-pastel-3d.pages.dev` | Proxied |
+| CNAME | `tres` | `jd-experimento-3.pages.dev` | Proxied |
+| CNAME | `tablero` | `jd-dashboard-z.pages.dev` | Proxied |
+| CNAME | `casual` | `jd-casual-intencional.pages.dev` | Proxied |
 
-- Variable de entorno `NODE_VERSION=22` en los cuatro juegos.
-- Cada sitio trae `static/_redirects` con `/* /index.html 200`: Cloudflare
-  Pages lo aplica tal cual y el SPA no da 404 al refrescar.
-- `static/robots.txt` permite rastreo completo.
-- Para los subdominios: en cada proyecto → **Custom domains** → agregar el
-  dominio (el DNS debe estar en la misma cuenta de Cloudflare).
+Cuando estén activos, cambiar los enlaces del portal (`index.html`) de
+`*.pages.dev` a los subdominios propios.
 
 ## Accesibilidad
 
