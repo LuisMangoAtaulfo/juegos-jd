@@ -1,5 +1,11 @@
 # Casual vs. Intencional
 
+> **Estado:** `casual.mango-ataulfo.com` sirve ahora **Duelo de Gráficos**
+> (`juego-duelo-graficos/`). Este juego queda en local (`npm run dev`) y puede
+> volver a publicarse con
+> `wrangler pages deploy build --project-name=jd-casual-intencional --branch=main`
+> (ese comando reemplaza al otro juego en el dominio).
+
 Módulo interactivo del módulo **Diseño y emisión de reportes**. Cinco tarjetas
 con ilustraciones SVG (nubes, semáforo, gráfico de soporte, cartel, ramas) que
 se deslizan a **casual** (←) o **intencional** (→). Después de cada respuesta

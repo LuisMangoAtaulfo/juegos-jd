@@ -10,7 +10,8 @@ Cloudflare Pages) y comparten el mismo sistema de diseño
 | `juego-pastel-3d/` | Juicio al pastel 3D | Pastel/3D vs. barras con eje en 0 | `pastel.mango-ataulfo.com` |
 | `juego-experimento-3/` | Experimento del 3 | Memoria icónica · atributos preatentivos | `tres.mango-ataulfo.com` (demo de 2 láminas desde `presentacion/slides-tres.md`; el juego queda en local) |
 | `juego-dashboard-z/` | Arma tu dashboard en Z | Arquitectura visual · patrón de lectura en Z | `tablero.mango-ataulfo.com` |
-| `juego-casual-intencional/` | Casual vs. Intencional | Emisor, propósito y filtros de percepción | `casual.mango-ataulfo.com` |
+| `juego-duelo-graficos/` | Duelo de Gráficos | Ruido visual · limpieza de un gráfico | `casual.mango-ataulfo.com` |
+| `juego-casual-intencional/` *(en local)* | Casual vs. Intencional | Emisor, propósito y filtros de percepción | — (lo reemplazó Duelo de Gráficos) |
 | `index.html` + `styles.css` | **Portal** | Índice de los cuatro módulos | — |
 
 Las carpetas `p2/`, `presentacion/` y `crucigrama/` son entregas de otras
@@ -19,7 +20,7 @@ materias y quedan fuera de este repositorio (están en `.gitignore`).
 ## Correr un juego
 
 ```sh
-cd juego-pastel-3d   # o cualquiera de los otros tres
+cd juego-duelo-graficos   # o cualquier otra carpeta juego-*
 npm install
 npm run dev
 ```
@@ -54,8 +55,9 @@ producción:
 ### Volver a publicar
 
 ```sh
-for d in juego-pastel-3d juego-dashboard-z juego-casual-intencional; do
-  proj="jd-${d#juego-}"            # jd-pastel-3d, jd-dashboard-z, …
+for d in juego-pastel-3d juego-dashboard-z juego-duelo-graficos; do
+  proj="jd-${d#juego-}"
+  [ "$d" = "juego-duelo-graficos" ] && proj="jd-casual-intencional" # dominio casual.*
   (cd "$d" && npm run build && wrangler pages deploy build --project-name="$proj" --branch=main)
 done
 
@@ -91,9 +93,10 @@ propios; las URLs `*.pages.dev` siguen funcionando como respaldo.
 ## Accesibilidad
 
 - Teclado completo: pastel (A/D), matriz + campo numérico, tablero (selección →
-  colocación · `Esc` cancela, `Supr` devuelve al banco), tarjetas (`←`/`→` +
-  botones).
-- Estados anunciados con `role="status"` / `aria-live`.
+  colocación · `Esc` cancela, `Supr` devuelve al banco), interruptores del
+  editor (`role="switch"`), tarjetas del módulo local (`←`/`→` + botones).
+- Estados anunciados con `role="status"` / `aria-live` (incluido el ruido
+  visual del editor).
 - `prefers-reduced-motion` respetado (CSS global + guards en JS).
 - El HTML prerenderizado ya incluye `<title>`, `meta description` y favicon
   (viven en cada `src/app.html`).
