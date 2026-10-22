@@ -147,6 +147,14 @@
 		return () => window.removeEventListener('keydown', onKey);
 	});
 
+	// el puntero pasa a "agarrando" mientras dura el arrastre
+	$effect(() => {
+		document.body.style.cursor = drag ? 'grabbing' : '';
+		return () => {
+			document.body.style.cursor = '';
+		};
+	});
+
 	function validate() {
 		sel = null;
 		result = validateBoard(cells);
@@ -166,6 +174,14 @@
 		sel = null;
 	}
 </script>
+
+<!-- el arrastre se sigue con el puntero en toda la ventana -->
+<svelte:window
+	onpointermove={onMove}
+	onpointerup={onUp}
+	onpointercancel={onUp}
+	onselectstart={(e) => drag && e.preventDefault()}
+/>
 
 <div class="toolbar">
 	<div class="toolbar-info">
