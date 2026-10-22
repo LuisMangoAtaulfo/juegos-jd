@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { fade, fly, scale } from 'svelte/transition';
+	import { fade, fly } from 'svelte/transition';
 	import {
 		PIECES,
 		PIECE_MAP,
@@ -28,7 +28,7 @@
 	}
 
 	let drag = $state<Drag | null>(null);
-	let dragMoved = false;
+	let dragMoved = $state(false);
 
 	// selección por clic/teclado (alternativa accesible al arrastre)
 	let sel = $state<{ id: PieceId; from: number } | null>(null);
@@ -65,7 +65,7 @@
 
 	function onMove(e: PointerEvent) {
 		if (!drag) return;
-		if (Math.abs(e.clientX - drag.sx) > 4 || Math.abs(e.clientY - drag.sy) > 4) dragMoved = true;
+		if (Math.abs(e.clientX - drag.sx) > 6 || Math.abs(e.clientY - drag.sy) > 6) dragMoved = true;
 		drag.x = e.clientX;
 		drag.y = e.clientY;
 		const el = document.elementFromPoint(e.clientX, e.clientY);
@@ -111,12 +111,14 @@
 		if (!drag) return;
 		const el = document.elementFromPoint(e.clientX, e.clientY);
 		const cellEl = el?.closest('[data-cell]');
+		const bankEl = el?.closest('[data-bank]');
 		const d = drag;
 		drag = null;
 
-		// sin arrastre real: es un clic → selección o colocación
-		if (!dragMoved) {
-			const idx = cellEl ? Number(cellEl.getAttribute('data-cell')) : null;
+		const idx = cellEl ? Number(cellEl.getAttribute('data-cell')) : null;
+		// mismo sitio de origen, o pulsación sin moverse → clic (selección/colocación)
+		const isClick = !dragMoved || idx === d.from || (d.from === -1 && bankEl !== null);
+		if (isClick) {
 			if (sel && idx !== null && idx !== sel.from) placeSelected(idx);
 			else toggleSel(d.id, d.from);
 			return;
@@ -124,25 +126,29 @@
 
 		result = null;
 		sel = null;
-		if (cellEl) {
-			const idx = Number(cellEl.getAttribute('data-cell'));
+		if (idx !== null) {
 			if (idx !== d.from) movePiece(d.id, d.from, idx);
-		} else if (el?.closest('[data-bank]') && d.from >= 0) {
+		} else if (bankEl && d.from >= 0) {
 			cells[d.from] = null;
 		}
 	}
 
-	// Escape cancela la selección activa
+	// Escape cancela la selección; Supr/Backspace la devuelve al banco
 	$effect(() => {
 		if (!sel) return;
 		const onKey = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') sel = null;
+			else if ((e.key === 'Delete' || e.key === 'Backspace') && sel && sel.from >= 0) {
+				e.preventDefault();
+				returnToBank();
+			}
 		};
 		window.addEventListener('keydown', onKey);
 		return () => window.removeEventListener('keydown', onKey);
 	});
 
 	function validate() {
+		sel = null;
 		result = validateBoard(cells);
 	}
 
@@ -163,7 +169,7 @@
 
 <div class="toolbar">
 	<div class="toolbar-info">
-		<span class="pill">Lienzo 3 × 3 · arrastra las piezas</span>
+		<span class="pill">Lienzo 3 × 3 · arrastra o pulsa</span>
 		<span class="hint">Arquitectura visual de un tablero ejecutivo</span>
 	</div>
 	<div class="toolbar-actions">
@@ -261,7 +267,7 @@
 								aria-label="Colocar {selName} en la celda {i + 1}"
 								onclick={() => placeSelected(i)}
 							>
-								＋ Colocar
+								＋
 							</button>
 						{:else}
 							<span class="cell-hint">{i + 1}</span>
@@ -293,15 +299,11 @@
 			</div>
 		</div>
 
-		{#if sel}
-			<div class="sel-row" role="status">
-				<span class="pill">{selName} seleccionada</span>
-				<span class="hint">Elige una celda destino · Esc para cancelar</span>
-				{#if sel.from >= 0}
-					<button class="btn" onclick={returnToBank}>↩ Devolver al banco</button>
-				{/if}
-			</div>
-		{/if}
+		<p class="sr-only" role="status">
+			{sel
+				? `${selName} seleccionada. Elige una celda destino; Supr la devuelve al banco y Esc cancela.`
+				: ''}
+		</p>
 
 		<p class="hint board-note">
 			El patrón en Z: la mirada entra en <strong>1</strong> (arriba-izquierda), cruza a
@@ -355,7 +357,7 @@
 	</aside>
 </div>
 
-{#if drag}
+{#if drag && dragMoved}
 	{@const p = PIECE_MAP[drag.id]}
 	<div
 		class="ghost"
@@ -550,39 +552,41 @@
 		user-select: none;
 	}
 
-	/* modo selección (clic/teclado) */
-	.board.selecting .cell {
+	/* modo selección (clic/teclado): solo las celdas vacías son destino */
+	.board.selecting .cell.empty {
 		border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
 	}
 
 	.cell-place {
-		border: 1px dashed var(--accent);
+		width: 100%;
+		height: 100%;
+		display: grid;
+		place-items: center;
+		border: 0;
+		border-radius: 7px;
+		background: transparent;
+		color: color-mix(in srgb, var(--accent) 55%, transparent);
+		font-size: 1.15rem;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	.cell-place:hover,
+	.cell-place:focus-visible {
 		background: var(--accent-soft);
 		color: var(--accent);
-		border-radius: 7px;
-		padding: 0.4rem 0.7rem;
-		font-size: 0.8rem;
-		font-weight: 700;
 	}
 
-	.cell-place:hover {
-		background: color-mix(in srgb, var(--accent) 18%, var(--surface));
-	}
-
-	.sel-row {
-		width: 100%;
-		display: flex;
-		align-items: center;
-		gap: 0.7rem;
-		flex-wrap: wrap;
-		border-top: 1px solid var(--border);
-		padding-top: 0.8rem;
-	}
-
-	.sel-row .btn {
-		margin-left: auto;
-		padding: 0.4rem 0.8rem;
-		font-size: 0.82rem;
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border: 0;
 	}
 
 	.placed.selected,

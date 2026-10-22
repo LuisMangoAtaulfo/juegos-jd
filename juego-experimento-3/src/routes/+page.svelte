@@ -153,7 +153,7 @@
 			{/if}
 			<div class="head-tools">
 				<div class="clock" aria-live="off">{fmt(elapsed)}<small>s</small></div>
-				<button class="btn" onclick={abandon}>Abandonar</button>
+				<button class="btn btn-ghost" onclick={abandon}>Abandonar</button>
 			</div>
 		</div>
 
@@ -371,9 +371,18 @@
 		flex-wrap: wrap;
 	}
 
-	.head-tools .btn {
-		padding: 0.42rem 0.85rem;
+	.head-tools .btn-ghost {
+		border-color: transparent;
+		background: transparent;
+		color: var(--text-muted);
 		font-size: 0.82rem;
+		padding: 0.42rem 0.65rem;
+	}
+
+	.head-tools .btn-ghost:hover {
+		background: var(--danger-soft);
+		border-color: transparent;
+		color: var(--danger);
 	}
 
 	.clock small {

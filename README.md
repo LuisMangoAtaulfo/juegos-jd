@@ -84,7 +84,8 @@ propios; las URLs `*.pages.dev` siguen funcionando como respaldo.
 ## Accesibilidad
 
 - Teclado completo: pastel (A/D), matriz + campo numérico, tablero (selección →
-  colocación → `Esc`), tarjetas (`←`/`→` + botones).
+  colocación · `Esc` cancela, `Supr` devuelve al banco), tarjetas (`←`/`→` +
+  botones).
 - Estados anunciados con `role="status"` / `aria-live`.
 - `prefers-reduced-motion` respetado (CSS global + guards en JS).
 - El HTML prerenderizado ya incluye `<title>`, `meta description` y favicon

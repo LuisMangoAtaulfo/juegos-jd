@@ -120,7 +120,7 @@
 <div class="head-row">
 	<div class="how">
 		<span class="chip chip-casual">← Casual</span>
-		<span class="how-text">desliza la tarjeta o usa ← →</span>
+		<span class="how-text">desliza o usa ← →</span>
 		<span class="chip chip-intencional">Intencional →</span>
 	</div>
 	<div class="progress" aria-label="Progreso">

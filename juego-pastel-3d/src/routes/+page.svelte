@@ -246,7 +246,7 @@
 					<button class="btn btn-primary" onclick={convert}>
 						Verlo en barras 2D →
 					</button>
-					<button class="btn" onclick={reset}>↺ Reintentar el reto</button>
+					<button class="btn" onclick={reset}>↺ Reintentar</button>
 				</div>
 			{/if}
 		</aside>

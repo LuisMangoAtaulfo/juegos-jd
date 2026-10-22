@@ -31,8 +31,8 @@ npm run preview  # sirve build/
 - `src/lib/pieces.ts` — piezas, iconos SVG y `validateBoard()`.
 - **Arrastre con puntero** (mouse/touch) y **alternativa por teclado**:
   `Enter`/`Espacio` sobre una pieza la selecciona, `Enter` en una celda la
-  coloca (o intercambia), `Esc` cancela y el botón *Devolver al banco* la
-  regresa. Hay un `aria-live` con la selección y con el resultado de validar.
+  coloca (o intercambia), `Esc` cancela y `Supr` la devuelve al banco. El aviso
+  de selección y el resultado de validar se anuncian con `aria-live` oculto.
 - *Ver patrón Z* dibuja el recorrido de la mirada; *Ver ejemplo* llena el
   tablero con la distribución recomendada.
 
