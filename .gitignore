@@ -6,7 +6,10 @@ dist/
 .output/
 .wrangler/
 
-# Entregas de otras materias fuera de este repo
+# Entregas de otras materias fuera de este repo.
+# Ojo: presentacion/ es la fuente de la demo publicada en
+# tres.mango-ataulfo.com (presentacion/slides-tres.md); queda fuera del repo
+# porque es otra entrega.
 p2/
 presentacion/
 crucigrama/

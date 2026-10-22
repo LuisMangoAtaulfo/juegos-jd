@@ -1,5 +1,12 @@
 # Experimento del 3
 
+> **Estado:** `tres.mango-ataulfo.com` sirve ahora una demo de **2 láminas**
+> hecha en Slidev (`presentacion/slides-tres.md`, mismo contenido: matriz en
+> gris y matriz con los 3 resaltados). Este juego queda en local
+> (`npm run dev`) y puede volver a publicarse con
+> `wrangler pages deploy build --project-name=jd-experimento-3 --branch=main`
+> (ese comando reemplaza la demo en el dominio).
+
 Módulo interactivo del módulo **Diseño y emisión de reportes**. El jugador
 cuenta los números **3** de una matriz de 4×12 con cronómetro, primero en gris
 plano y después con los 3 en color y negrita. Al final compara sus dos tiempos

@@ -8,7 +8,7 @@ Cloudflare Pages) y comparten el mismo sistema de diseño
 | Carpeta | Juego | Concepto | Dominio |
 |---|---|---|---|
 | `juego-pastel-3d/` | Juicio al pastel 3D | Pastel/3D vs. barras con eje en 0 | `pastel.mango-ataulfo.com` |
-| `juego-experimento-3/` | Experimento del 3 | Memoria icónica · atributos preatentivos | `tres.mango-ataulfo.com` |
+| `juego-experimento-3/` | Experimento del 3 | Memoria icónica · atributos preatentivos | `tres.mango-ataulfo.com` (demo de 2 láminas desde `presentacion/slides-tres.md`; el juego queda en local) |
 | `juego-dashboard-z/` | Arma tu dashboard en Z | Arquitectura visual · patrón de lectura en Z | `tablero.mango-ataulfo.com` |
 | `juego-casual-intencional/` | Casual vs. Intencional | Emisor, propósito y filtros de percepción | `casual.mango-ataulfo.com` |
 | `index.html` + `styles.css` | **Portal** | Índice de los cuatro módulos | — |
@@ -54,15 +54,22 @@ producción:
 ### Volver a publicar
 
 ```sh
-for d in juego-pastel-3d juego-experimento-3 juego-dashboard-z juego-casual-intencional; do
-  proj="jd-${d#juego-}"            # jd-pastel-3d, jd-experimento-3, …
+for d in juego-pastel-3d juego-dashboard-z juego-casual-intencional; do
+  proj="jd-${d#juego-}"            # jd-pastel-3d, jd-dashboard-z, …
   (cd "$d" && npm run build && wrangler pages deploy build --project-name="$proj" --branch=main)
 done
+
+# demo del 3 (Slidev, 2 láminas) → tres.mango-ataulfo.com
+(cd presentacion && npm run deploy:tres)
 
 # portal
 mkdir -p dist && cp index.html styles.css dist/
 wrangler pages deploy dist --project-name=jd-portal --branch=main
 ```
+
+Nota: `npm run build:tres` elimina el `404.html` que genera Slidev; si existe,
+Cloudflare Pages responde ese archivo y el fallback de `_redirects` no aplica
+(las rutas `/1`, `/2` darían 404).
 
 ### Dominios propios (activos)
 
